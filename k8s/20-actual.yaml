@@ -23,10 +23,10 @@ spec:
           env:
             - { name: ACTUAL_PORT, value: "5006" }
             - { name: NODE_EXTRA_CA_CERTS, value: /etc/ssl/custom/ca.crt }
-            - { name: ACTUAL_OPENID_DISCOVERY_URL, value: "https://auth.home/application/o/actual/.well-known/openid-configuration" }
+            - { name: ACTUAL_OPENID_DISCOVERY_URL, value: "https://auth.lan.home/application/o/actual/.well-known/openid-configuration" }
             - { name: ACTUAL_OPENID_CLIENT_ID, value: actual }
             - { name: ACTUAL_OPENID_CLIENT_SECRET_FILE, value: /etc/actual/oidc/CLIENT_SECRET }
-            - { name: ACTUAL_OPENID_SERVER_HOSTNAME, value: "https://actual.home" }
+            - { name: ACTUAL_OPENID_SERVER_HOSTNAME, value: "https://actual.lan.home" }
           ports:
             - name: http
               containerPort: 5006
