@@ -22,11 +22,18 @@ spec:
           image: docker.io/actualbudget/actual-server:26.9.0
           env:
             - { name: ACTUAL_PORT, value: "5006" }
+            - { name: NODE_EXTRA_CA_CERTS, value: /etc/ssl/custom/ca.crt }
+            - { name: ACTUAL_OPENID_DISCOVERY_URL, value: "https://auth.home/application/o/actual/.well-known/openid-configuration" }
+            - { name: ACTUAL_OPENID_CLIENT_ID, value: actual }
+            - { name: ACTUAL_OPENID_CLIENT_SECRET_FILE, value: /etc/actual/oidc/CLIENT_SECRET }
+            - { name: ACTUAL_OPENID_SERVER_HOSTNAME, value: "https://actual.home" }
           ports:
             - name: http
               containerPort: 5006
           volumeMounts:
             - { name: data, mountPath: /data }
+            - { name: home-ca-cert, mountPath: /etc/ssl/custom }
+            - { name: oidc-secret, mountPath: /etc/actual/oidc, readOnly: true }
           resources:
             requests: { cpu: 50m, memory: 128Mi }
             limits: { memory: 1Gi }
@@ -42,6 +49,12 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: actual-data
+        - name: home-ca-cert
+          configMap:
+            name: home-ca-cert
+        - name: oidc-secret
+          secret:
+            secretName: actual-oidc-secret
 ---
 apiVersion: v1
 kind: Service

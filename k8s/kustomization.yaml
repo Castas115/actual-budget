@@ -5,6 +5,8 @@ namespace: actual
 
 resources:
   - 10-storage.yaml
+  - 15-ca-cert.yaml
+  - 22-oidc-sealed-secret.yaml
   - 20-actual.yaml
 
 commonLabels:
